@@ -10,4 +10,4 @@ class Player(models.Model):
     name = models.CharField(max_length=255, null=False)
     surname = models.CharField(max_length=255, null=False)
     birth_date = models.DateField(null=False)
-    gender = models.CharField(max_length=1, choices=Gender, default=Gender.MALE, null=False)
+    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.MALE, null=False)
