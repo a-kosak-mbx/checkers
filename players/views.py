@@ -33,6 +33,14 @@ def index(request: HttpRequest):
             'long_user_name': get_long_user_name(user),
             'grade': get_grade(),
         }
+    else:
+        context = {
+            'number_of_notifications': 0,
+            'number_of_messages': 0,
+            'short_user_name': 'NoName',
+            'long_user_name': 'NoName',
+            'grade': 'None',
+        }
 
     return render(request, 'index.html', context=context)
 
