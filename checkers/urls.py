@@ -17,14 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from players import views
+
 urlpatterns = [
     path('players/', include('players.urls')),
     path('admin/', admin.site.urls),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
 ]
-
-
-'http://127.0.0.1:8000/players/fetch_user/?id=1'
-{
-    'host': '127.0.0.1',
-    'path': 'fetch_user/',
-}
