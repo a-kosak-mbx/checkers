@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from .forms import LoginForm
+from .forms import LoginForm, NewUserForm
 
 
 def get_number_of_notifications_for_user() -> int:
@@ -60,7 +60,7 @@ def login(request: HttpRequest):
                 else:
                     errors = 'Username is inactive!'
             else:
-                errors = 'Username or password are invalid!'
+                errors = 'Username or password invalid!'
         else:
             errors = 'Fill both username and password!'
     else:
@@ -76,3 +76,16 @@ def logout(request: HttpRequest):
 
 def fetch_user(request: HttpRequest):
     return HttpResponse('')
+
+
+def register(request):
+    errors = {}
+    form = NewUserForm()
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            django_login(request, user)
+            return redirect('index')
+        errors = form.errors
+    return render(request, 'register.html', context={'form': form, 'errors': errors})
